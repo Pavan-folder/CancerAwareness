@@ -8,8 +8,4 @@ export const contactFormSchema = z.object({
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
-export interface Quote {
-  content: string;
-  author: string;
-  _id: string;
-}
+

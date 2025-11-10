@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactFormSchema, type ContactFormData, type Quote } from "@shared/schema";
+import { contactFormSchema, type ContactFormData } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Mail, User, MessageSquare, RefreshCw, Loader2, Menu, X } from "lucide-react";
+import { Heart, Mail, User, MessageSquare, Menu, X } from "lucide-react";
 import heroBanner from "@assets/generated_images/Cancer_support_community_holding_hands_2620974c.png";
-import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const { toast } = useToast();
-  const [quoteKey, setQuoteKey] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const form = useForm<ContactFormData>({
@@ -26,21 +24,12 @@ export default function Home() {
     },
   });
 
-  const { data: quote, isLoading: isQuoteLoading, refetch: refetchQuote } = useQuery<Quote>({
-    queryKey: ['/api/quote', quoteKey],
-  });
-
   const onSubmit = (data: ContactFormData) => {
     toast({
       title: "Message Received",
       description: "Thank you for reaching out. We'll get back to you soon.",
     });
     form.reset();
-  };
-
-  const handleRefreshQuote = () => {
-    setQuoteKey(prev => prev + 1);
-    refetchQuote();
   };
 
   const scrollToSection = (id: string) => {
@@ -77,14 +66,7 @@ export default function Home() {
               >
                 About
               </a>
-              <a 
-                href="#quotes" 
-                onClick={(e) => { e.preventDefault(); scrollToSection('quotes'); }}
-                className="text-foreground font-medium hover-elevate py-2 px-1"
-                data-testid="link-resources"
-              >
-                Resources
-              </a>
+
               <a 
                 href="#contact" 
                 onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
@@ -127,14 +109,7 @@ export default function Home() {
               >
                 About
               </a>
-              <a 
-                href="#quotes" 
-                onClick={(e) => { e.preventDefault(); scrollToSection('quotes'); }}
-                className="text-foreground font-medium hover-elevate py-2"
-                data-testid="link-mobile-resources"
-              >
-                Resources
-              </a>
+
               <a 
                 href="#contact" 
                 onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
@@ -226,45 +201,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Inspirational Quotes Section */}
-      <section id="quotes" className="py-16 lg:py-24 bg-gradient-to-br from-primary/5 to-primary/10">
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 text-foreground" data-testid="text-quotes-title">
-            Words of Hope & Inspiration
-          </h2>
-          <Card className="shadow-lg border-card-border" data-testid="card-quote">
-            <CardContent className="p-8 lg:p-12">
-              {isQuoteLoading ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 animate-spin text-primary" data-testid="loader-quote" />
-                </div>
-              ) : quote ? (
-                <div className="space-y-6">
-                  <blockquote className="text-xl lg:text-2xl italic text-card-foreground leading-relaxed" data-testid="text-quote-content">
-                    "{quote.content}"
-                  </blockquote>
-                  <p className="text-right text-lg text-muted-foreground font-medium" data-testid="text-quote-author">
-                    — {quote.author}
-                  </p>
-                </div>
-              ) : (
-                <p className="text-center text-muted-foreground" data-testid="text-quote-error">Failed to load quote</p>
-              )}
-              <div className="mt-8 flex justify-center">
-                <Button 
-                  variant="outline" 
-                  onClick={handleRefreshQuote}
-                  disabled={isQuoteLoading}
-                  data-testid="button-refresh-quote"
-                >
-                  <RefreshCw className={`w-4 h-4 mr-2 ${isQuoteLoading ? 'animate-spin' : ''}`} />
-                  New Quote
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+
 
       {/* Contact Form Section */}
       <section id="contact" className="py-16 lg:py-24 bg-background">
@@ -415,7 +352,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className="hover-elevate inline-block py-1" data-testid="link-footer-about">About Us</a></li>
                 <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover-elevate inline-block py-1" data-testid="link-footer-contact">Contact</a></li>
-                <li><a href="#quotes" onClick={(e) => { e.preventDefault(); scrollToSection('quotes'); }} className="hover-elevate inline-block py-1" data-testid="link-footer-resources">Resources</a></li>
+
                 <li><a href="#" className="hover-elevate inline-block py-1" data-testid="link-footer-support-groups">Support Groups</a></li>
               </ul>
             </div>

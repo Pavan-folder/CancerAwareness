@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Heart, Mail, User, MessageSquare, Menu, X } from "lucide-react";
-import heroBanner from "@assets/generated_images/Cancer_support_community_holding_hands_2620974c.png";
+
 
 export default function Home() {
   const { toast } = useToast();
@@ -125,10 +125,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="hero" className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBanner})` }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-black/30" />
         
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
